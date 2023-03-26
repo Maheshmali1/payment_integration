@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const dotenv = require("dotenv");
+const createInvoice = require("./invoice");
 
 dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -10,6 +11,44 @@ app.use(bodyParser.json());
 const Razorpay = require('razorpay');
 const { urlencoded, json } = require("body-parser");
 app.set('view engine', 'ejs');
+
+var trolley = {
+trolleyName : "trolley1",
+emailId: "mahinmali2000@gmail.com",
+invoice_nr : 1,
+subtotal:300,
+items :[
+  {
+    barcodeId : "8901030763908",
+    brand : "Vim",
+    name :  "Vim Dishwash Bar",
+    weight : "135 gm",
+    storeCount : 11,
+    trolleyCnt :2,
+    price: 10
+  },
+  {
+    barcodeId : "8901314010520",
+    brand : "Colgate",
+    name :  "Colagte Strong teeth",
+    weight : "100 gm",
+    storeCount : 10,
+    trolleyCnt :1,
+    price: 66
+  },
+  {
+    barcodeId : "8901030915772",
+    brand : "Rin",
+    name :  "Rin-soap",
+    weight : "110 gm",
+    storeCount : 32,
+    trolleyCnt :1,
+    price: 10
+  }
+]
+}
+
+createInvoice(trolley, "invoice.pdf");
 
 var instance = new Razorpay({ key_id: process.env.API_KEY, key_secret: process.env.API_SECRET })
 
