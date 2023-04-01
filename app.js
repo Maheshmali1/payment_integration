@@ -100,7 +100,7 @@ app.post("/", (req, res) => {
   }
   else{
     console.log("signature Invalid");
-    res.send("Payments Failut")
+    res.send("Payments Failed.")
   }
 
 })

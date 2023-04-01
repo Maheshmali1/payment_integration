@@ -38,6 +38,7 @@ function generateCustomerInformation(doc, invoice) {
 
   doc
     .fontSize(10)
+    .font("Helvetica-Bold")
     .text("Email Id:", 50, customerInformationTop)
     .font("Helvetica-Bold")
     .text(invoice.emailId, 150, customerInformationTop)
@@ -45,12 +46,16 @@ function generateCustomerInformation(doc, invoice) {
     .text("Invoice Number:", 50, customerInformationTop+15)
     .font("Helvetica-Bold")
     .text(invoice.invoice_nr, 150, customerInformationTop+15)
+    
+    .text("Trolley Name:", 50, customerInformationTop+30)
+    .font("Helvetica-Bold")
+    .text(invoice.trolleyName, 150, customerInformationTop+30)
 
-    .font("Helvetica")
-    .text("Invoice Date:", 50, customerInformationTop + 15)
-    .text(formatDate(new Date()), 150, customerInformationTop + 15)
+    .font("Helvetica-Bold")
+    .text("Invoice Date:", 50, customerInformationTop + 45)
+    .text(formatDate(new Date()), 150, customerInformationTop + 45)
     .moveDown();
-  generateHr(doc, 252);
+  generateHr(doc, 272);
 }
 
 function generateInvoiceTable(doc, invoice) {
@@ -91,7 +96,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Subtotal",
     "",
-    formatCurrency(invoice.subtotal)
+   "Rs." + formatCurrency(invoice.subtotal)
   );
 }
 
@@ -116,9 +121,9 @@ function generateTableRow(
 ) {
   doc
     .fontSize(10)
-    .text(item, 50, y)
-    .text(unitCost, 280, y, { width: 90, align: "right" })
-    .text(quantity, 370, y, { width: 90, align: "right" })
+    .text(item, 50, y,{ align: "left" })
+    .text(unitCost, 280, y, { width: 90, align: "center" })
+    .text(quantity, 370, y, { width: 90, align: "center" })
     .text(lineTotal, 0, y, { align: "right" });
 }
 
@@ -132,7 +137,9 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  let rupee = String.fromCodePoint(0x020B9);
+
+  return (cents).toFixed(2);
 }
 
 function formatDate(date) {
@@ -143,6 +150,7 @@ function formatDate(date) {
   return year + "/" + month + "/" + day;
 }
 
-module.exports = {
-  createInvoice
-};
+// module.exports = {
+//   createInvoice
+// };
+module.exports = createInvoice;
